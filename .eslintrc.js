@@ -1,28 +1,32 @@
 module.exports = {
-  root: true,
   env: {
+    browser: true,
+    es2021: true,
     node: true,
+    'vue/setup-compiler-macros': true,
   },
-  extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/airbnb',
-  ],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-essential', './.eslintrc-auto-import.json'],
+  overrides: [],
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: 'babel-eslint',
+    ecmaVersion: 12,
+    sourceType: 'module',
+    allowImportExportEverywhere: true, // 不限制eslint对import使用位置
+
+    //     ecmaFeatures: {
+    //       modules: true,
+    //       legacyDecorators: true
+    //     }
   },
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+    process: true,
+    __webpack_public_path__: 'writable',
+  },
+  plugins: ['vue'],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    //关闭组件命名规则
+    'vue/multi-word-component-names': 'off',
   },
-  overrides: [
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
-      ],
-      env: {
-        jest: true,
-      },
-    },
-  ],
 };
